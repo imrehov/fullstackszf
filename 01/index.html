@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fullstack-Workshop-03</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <div id="inputdiv">
+        <input type="text" placeholder="Name">
+        <input type="text" placeholder="E-mail">
+        <input type="text" placeholder="Job">
+        <input type="text" placeholder="Age">
+        <input type="text" placeholder="Salary">
+        <button onclick="addDev()">Add</button>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Image</th>
+                <th scope="col">Name</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Job</th>
+                <th scope="col">Age</th>
+                <th scope="col">Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>John</td>
+                <td>Doe</td>
+                <td>@social</td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="calculations">
+        <p>
+            Mennyi az átlagéletkor?
+            <span id="Q1"></span>
+        </p>
+        <p>
+            Mennyi az átlagfizetés a frontendesek között?
+            <span id="Q2"></span>
+        </p>
+        <p>
+            Ki ért a legtöbb mindenhez?
+            <span id="Q3"></span>
+        </p>
+        <p>
+            Melyik cégből dolgozik a legtöbb ember?
+            <span id="Q4"></span>
+        </p>
+        <p>
+            Ki a legfiatalabb fejlesztő és mennyit keres ő?
+            <span id="Q5"></span>
+        </p>
+        <p>
+            Mekkora a különbség fizetésben a legfiatalabb és legidősebb fejlesztő között?
+            <span id="Q6"></span>
+        </p>
+        <p>
+            Munkakörönként csoportosítva mennyi az átlagfizetés?
+            <span id="Q7"></span>
+        </p>
+    </div>
+
+    <div id="table-target"></div>
+
+</body>
+
+</html>
