@@ -6,6 +6,8 @@
 
 const developers = async () => {
     const devs = await fetch("developers.json");
+    // console.log(devs.json());
+    
     return await devs.json();
 }
 
@@ -19,7 +21,7 @@ function rateSalary(salary) {
     }
 }
 
-async function loadTable(data) {
+function loadTable(data) {
 
     let tbody = document.getElementsByTagName("tbody")[0];
 
@@ -40,10 +42,13 @@ async function loadTable(data) {
             `;
     }
 
+    // console.log(rows);
+    
+
     tbody.innerHTML = rows;
 }
 
-async function avgAge(data) {
+function avgAge(data) {
     
     let totalAge = 0;
 
@@ -58,7 +63,7 @@ async function avgAge(data) {
     q1.innerHTML = `${avgAge.toFixed(2)} az átlagéletkor.`;
 }
 
-async function frontendAvgSalary(data) {
+function frontendAvgSalary(data) {
 
     let feSalary = 0;
     let feCount = 0;
@@ -75,7 +80,7 @@ async function frontendAvgSalary(data) {
     q2.innerHTML = `${(feSalary/feCount).toLocaleString("hu-HU")} HUF a frontendesek átlagbére.`
 }
 
-async function mostSkills(data) {
+function mostSkills(data) {
 
     let max = 0;
 
@@ -91,7 +96,7 @@ async function mostSkills(data) {
     q3.innerHTML = `${data[max].name} ért a legtöbb mindenhez.`
 }
 
-async function mostPplFromCompany(data) {
+function mostPplFromCompany(data) {
 
     const companies = {};
 
@@ -125,7 +130,7 @@ async function mostPplFromCompany(data) {
 
 let yng = 0;
 
-async function youngestDev(data) {
+function youngestDev(data) {
 
     for (let i = 1; i < data.length; i++) {
         if (data[i].age < data[yng].age) {
@@ -138,7 +143,7 @@ async function youngestDev(data) {
     q5.innerHTML = `${data[yng].name} a legfiatalabb dev, aki ${data[yng].salary.toLocaleString("hu-HU")} HUF-t keres.`
 }
 
-async function salaryDiff(data) {
+function salaryDiff(data) {
     
     let old = 0;
 
@@ -155,7 +160,7 @@ async function salaryDiff(data) {
     q6.innerHTML = `A legidősebb dev ${data[old].name}, a legfiatalabb dev ${data[yng].name}, a kettejük fizetésének a különbsége: ${diff.toLocaleString("hu-HU")} HUF.`
 }
 
-async function avgSalaryPerJob(data) {
+function avgSalaryPerJob(data) {
     
     let salaryData = {};
 
@@ -215,12 +220,53 @@ async function addDev() {
 
     loadTable(data);
 
+    clearInpuFields();
+    
+}
+
+function clearInpuFields() {
     document.querySelector("#inputname").value = "";
     document.querySelector("#inputemail").value = "";
     document.querySelector("#inputjob").value = "";
     document.querySelector("#inputage").value = "";
     document.querySelector("#inputsalary").value = "";
+}
+
+async function editDev() {
+    const data = await developers();
+
+    console.log(data);
     
+
+    let name = document.querySelector("#inputname").value;
+    let email = document.querySelector("#inputemail").value;
+    let job = document.querySelector("#inputjob").value;
+    let age = document.querySelector("#inputage").value;
+    let salary = document.querySelector("#inputsalary").value.replace(/\s*HUF$/, "");
+
+    let index = -1;
+
+    for (i = 0; i < data.length; i++) {
+        if (data[i].name == name) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index == -1) {
+        alert("Item does not exist!")
+    }
+    else {
+        data[index].email = email;
+        data[index].job = job;
+        data[index].age = age;
+        data[index].salary = salary;
+
+    }
+
+    loadTable(data);
+
+    clearInpuFields();
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -240,7 +286,6 @@ document.addEventListener("click", (e) => {
     if (e.target.classList.contains("edit-btn")) {
         
         const row = e.target.closest("tr");
-        const id = row.dataset.id;
 
         const cells = row.children;
 
@@ -250,12 +295,13 @@ document.addEventListener("click", (e) => {
         const age = cells[5].innerText;
         const salary = cells[6].innerText;
 
+        console.log({ name, email, job, age, salary });
+
         document.querySelector("#inputname").value = name;
         document.querySelector("#inputemail").value = email;
         document.querySelector("#inputjob").value = job;
         document.querySelector("#inputage").value = age;
         document.querySelector("#inputsalary").value = salary;
 
-        console.log({ name, email, job, age, salary });
     }
 });
