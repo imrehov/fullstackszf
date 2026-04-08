@@ -38,6 +38,7 @@ function loadTable(data) {
                 <td>${data[i].age}</td>
                 ${rateSalary(data[i].salary)}
                 <td><button class="btn btn-sm btn-warning edit-btn">Edit</button></td>
+                <td><button class="btn btn-sm btn-danger delete-btn">Delete</button></td>
             </tr>
             `;
     }
@@ -302,6 +303,37 @@ document.addEventListener("click", (e) => {
         document.querySelector("#inputjob").value = job;
         document.querySelector("#inputage").value = age;
         document.querySelector("#inputsalary").value = salary;
+
+    }
+});
+
+document.addEventListener("click", async (e) => {
+
+    if (e.target.classList.contains("delete-btn")) {
+
+        const data = await developers();
+
+        const row = e.target.closest("tr");
+
+        const cells = row.children;
+
+        const name = cells[2].innerText;
+
+        let index = -1;
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].name == name) {
+                index = i;
+            }
+        }
+
+        if (index != -1) {
+            data.splice(index, 1);
+        }
+        
+        // console.log(data);
+        
+        loadTable(data);
+        console.log(`Deleted ${name}.`);
 
     }
 });
