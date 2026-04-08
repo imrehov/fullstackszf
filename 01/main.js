@@ -27,7 +27,7 @@ async function loadTable(data) {
 
     for (let i = 0; i < data.length; i++) {
         rows += `
-            <tr>
+            <tr data-id="${data[i].id}">
                 <th scope="row">${i + 1}</th>
                 <td><img src="${data[i].image}" class="rounded-circle" width="30" height="30"></td>
                 <td>${data[i].name}</td>
@@ -35,9 +35,9 @@ async function loadTable(data) {
                 <td>${data[i].job}</td>
                 <td>${data[i].age}</td>
                 ${rateSalary(data[i].salary)}
-                <td><button type="button" class="btn btn btn-secondary" onClick="editDev(event)">Edit</button></td>
+                <td><button class="btn btn-sm btn-warning edit-btn">Edit</button></td>
             </tr>
-        `;
+            `;
     }
 
     tbody.innerHTML = rows;
@@ -223,12 +223,6 @@ async function addDev() {
     
 }
 
-async function editDev(e) {
-    console.log(e);
-    
-}
-
-
 document.addEventListener("DOMContentLoaded", async () => {
     const data = await developers();
     loadTable(data);
@@ -241,3 +235,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     avgSalaryPerJob(data);
 })
 
+document.addEventListener("click", (e) => {
+
+    if (e.target.classList.contains("edit-btn")) {
+        
+        const row = e.target.closest("tr");
+        const id = row.dataset.id;
+
+        const cells = row.children;
+
+        const name = cells[2].innerText;
+        const email = cells[3].innerText;
+        const job = cells[4].innerText;
+        const age = cells[5].innerText;
+        const salary = cells[6].innerText;
+
+        document.querySelector("#inputname").value = name;
+        document.querySelector("#inputemail").value = email;
+        document.querySelector("#inputjob").value = job;
+        document.querySelector("#inputage").value = age;
+        document.querySelector("#inputsalary").value = salary;
+
+        console.log({ name, email, job, age, salary });
+    }
+});
