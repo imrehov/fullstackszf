@@ -4,6 +4,8 @@
 //     })
 //     .catch(err => console.error(err));
 
+let data = [];
+
 const developers = async () => {
     const devs = await fetch("developers.json");
     // console.log(devs.json());
@@ -194,9 +196,6 @@ function avgSalaryPerJob(data) {
 
 async function addDev() {
 
-    const data = await developers();
-
-    let localStorage = data;
 
     let name = document.querySelector("#inputname").value
     let email = document.querySelector("#inputemail").value
@@ -215,9 +214,7 @@ async function addDev() {
         "salary": salary
     }
 
-    localStorage.push(payload)
-    
-    console.log(localStorage);
+    data.push(payload)
 
     loadTable(data);
 
@@ -234,8 +231,6 @@ function clearInpuFields() {
 }
 
 async function editDev() {
-    const data = await developers();
-
     console.log(data);
     
 
@@ -271,7 +266,7 @@ async function editDev() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const data = await developers();
+    data = await developers();
     loadTable(data);
     avgAge(data);
     frontendAvgSalary(data);
@@ -310,8 +305,6 @@ document.addEventListener("click", (e) => {
 document.addEventListener("click", async (e) => {
 
     if (e.target.classList.contains("delete-btn")) {
-
-        const data = await developers();
 
         const row = e.target.closest("tr");
 
