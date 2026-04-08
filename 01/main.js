@@ -35,6 +35,7 @@ async function loadTable(data) {
                 <td>${data[i].job}</td>
                 <td>${data[i].age}</td>
                 ${rateSalary(data[i].salary)}
+                <td><button type="button" class="btn btn btn-secondary" onClick="editDev(event)">Edit</button></td>
             </tr>
         `;
     }
@@ -183,6 +184,48 @@ async function avgSalaryPerJob(data) {
     let q7 = document.getElementById("Q7")
 
     q7.innerHTML = result;
+}
+
+async function addDev() {
+
+    const data = await developers();
+
+    let localStorage = data;
+
+    let name = document.querySelector("#inputname").value
+    let email = document.querySelector("#inputemail").value
+    let job = document.querySelector("#inputjob").value
+    let age = document.querySelector("#inputage").value
+    let salary = document.querySelector("#inputsalary").value
+
+    console.log(name);
+    
+    let payload = {
+        "id": self.crypto.randomUUID(),
+        "name": name,
+        "email": email,
+        "job": job,
+        "age": age,
+        "salary": salary
+    }
+
+    localStorage.push(payload)
+    
+    console.log(localStorage);
+
+    loadTable(data);
+
+    document.querySelector("#inputname").value = "";
+    document.querySelector("#inputemail").value = "";
+    document.querySelector("#inputjob").value = "";
+    document.querySelector("#inputage").value = "";
+    document.querySelector("#inputsalary").value = "";
+    
+}
+
+async function editDev(e) {
+    console.log(e);
+    
 }
 
 
